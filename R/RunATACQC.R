@@ -82,17 +82,15 @@ RunATACQC <- function(
   }
 
   used_modern_qc <- FALSE
-  atacqc_name <- paste0("ATAC", "qc")
   if (
-    atacqc_name %in% getNamespaceExports("Signac") &&
+    "ATACqc" %in% getNamespaceExports("Signac") &&
       is.null(tss.positions) &&
       atac_has_annotation(srt[[assay]])
   ) {
-    atacqc_fun <- getExportedValue("Signac", atacqc_name)
     atacqc_result <- tryCatch(
       {
         list(
-          object = atacqc_fun(
+          object = Signac::ATACqc(
             object = srt,
             assay = assay,
             verbose = verbose
@@ -102,7 +100,7 @@ RunATACQC <- function(
       },
       error = function(error) {
         log_message(
-          "Skip Signac ATAC QC: {.val {conditionMessage(error)}}",
+          "Skip Signac::ATACqc(): {.val {conditionMessage(error)}}",
           message_type = "warning",
           verbose = verbose
         )

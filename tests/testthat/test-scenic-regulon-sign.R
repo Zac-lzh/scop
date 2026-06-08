@@ -63,8 +63,8 @@ test_that("C++ SCENIC module builder can include negative regulons", {
     verbose = FALSE
   )
 
-  suffixes <- unique(vapply(modules, `[[`, character(1), "suffix"))
-  expect_setequal(suffixes, c("(-)", "(+)"))
+  suffixes <- sort(unique(vapply(modules, `[[`, character(1), "suffix")))
+  expect_equal(suffixes, c("(-)", "(+)"))
   expect_true(any(vapply(modules, function(module) {
     identical(module$suffix, "(-)") && "GeneNeg" %in% module$genes
   }, logical(1))))
